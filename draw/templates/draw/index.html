@@ -17,6 +17,7 @@
 <body>
     <!-- You may change the dimensions of this canvas -->
     <canvas id="myCanvas" width="750px" height="750px"></canvas>
+    
 </body>
 <script>
 
@@ -27,7 +28,7 @@
     var tool = new paper.Tool();
     var path = new paper.Path();
     var uid = Date.now() % 10000;
-    path.strokeColor = Color();
+    path.strokeColor = Color(uid);
     path.strokeWidth = 3;
 
     // getting the URL (you may want to use for Exercise 3)
@@ -43,10 +44,10 @@
        socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
     }
 
-    function Color() {
-        var r = Math.floor(Math.random()*255);
-        var g = Math.floor(Math.random()*255);
-        var b = Math.floor(Math.random()*255);
+    function Color(u) {
+        var r = (u *3 + 12) % 255
+        var g = (u *2+ 3) % 255;
+        var b = (u *7+ 2) % 255;
         return "#" + r.toString(16) + g.toString(16) + b.toString(16);
     }
 
@@ -65,7 +66,7 @@
         if (uid != otherid) {
             if (!idmap.has(otherid)) {
                 var otherpath = new paper.Path();
-                otherpath.strokeColor = Color();
+                otherpath.strokeColor = Color(otherid);
                 otherpath.strokeWidth = 3;
                 idmap.set(otherid, otherpath);
             }
@@ -79,6 +80,8 @@
     socket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
+
+    
 
 </script>
 </html>

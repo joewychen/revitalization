@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>P4 Drawing</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+
+    <style type="text/css">
+    .box {
+        padding-top: 20px;
+        margin: auto;
+        width: 50%;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .host {
+        margin: 20px;
+        padding: 20px;
+        background-color: cornsilk;
+        text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    }
+
+    .join {
+        margin: 20px;
+        padding: 20px;
+        background-color:cornsilk;
+        /* text-align: center; */
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+    }
+
+    .text {
+        /* text-align: center; */
+        font-size: 50px;
+    }
+
+    img {
+        display: block;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+    }
+    </style>
+
+</head>
+<body>
+    <!-- You may change the dimensions of this canvas -->
+    <div class="box">
+
+        <div>
+            <p class="text">Game activity</p>
+            <p>Current Game: You draw I guess</p>
+            <div class=".imgbox">
+                <img src="/static/images/crayons.png" alt="">
+            </div>
+        </div>
+        <div class="host">
+            <P>Enter your name:</P>
+            <input type="text" value="" id="nameinput">
+        </div>
+        <div class="host">
+            <P>Enter the passcode for draw:</P>
+            <input type="text" value="" id="passcode">
+            <input type="button" value="Draw" id="host">
+        </div>
+        <div class="join">
+            <p>Go guessing</p>
+            <input type="button" value="Guess" id="join">
+        </div>
+    </div>
+    
+</body>
+<script>
+
+    // setting up the canvas and one paper tool
+    var uid = Date.now() % 10000;
+
+    // getting the URL (you may want to use for Exercise 3)
+    var url = window.location.href;
+
+    var socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/draw');
+    
+    var globalcode = "696969";
+
+
+    $("#host").click(function(){
+        var passcode = $("#passcode").val();
+        if (passcode != globalcode) return;
+        var username = $("#nameinput").val();
+        var goto = url.substring(0, url.length - 8) + "drawer?=" + uid + "=" + username;
+        ishost = true;
+        window.location.href = goto;
+    })
+
+    $("#join").click(function(){
+        var username = $("#nameinput").val();
+        var goto = url.substring(0, url.length - 8) + "textsender?=" + uid + "=" + username;
+        window.location.href = goto;
+    })
+
+    
+
+    socket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    
+
+</script>
+</html>

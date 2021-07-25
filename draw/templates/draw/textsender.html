@@ -1,0 +1,110 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>P4 Drawing</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+
+    <style type="text/css">
+    .box {
+        padding-top: 20px;
+        margin: auto;
+        width: 800px;
+        height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    #message {
+        width: 100%;
+        height: 200px;
+        font-size: 30px;
+        padding: 0;
+    }
+
+    .text {
+        font-size: 30px;
+        text-align: center;
+        
+    }
+    .postbox{
+        margin: 30px;
+    }
+    #post {
+        /* margin: 30px; */
+        padding: 30px;
+        width: 100%;
+        font-size: 30px;
+        background-color: cornflowerblue;
+    }
+    
+    </style>
+
+</head>
+<body>
+    <!-- You may change the dimensions of this canvas -->
+    <div class="box">
+        <div class="messagebox">
+            <input type="text" id="message">
+        </div>
+        <div class="postbox">
+            <input type="button" id="post" value="Post">
+        </div>
+        <!-- <button id="post">Post</button> -->
+    </div>
+</body>
+<script>
+
+    // setting up the canvas and one paper tool
+    var canvas = document.getElementById('myCanvas');
+    paper.setup(canvas);
+    var tool = new paper.Tool();
+    var path;
+    // getting the URL (you may want to use for Exercise 3)
+    var url = window.location.href;
+    var temparr = url.split("=");
+    var uid = temparr[1];
+    var username = temparr[2];
+    console.log(temparr)
+
+    var socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/draw');
+
+
+    function Color(u) {
+        var r = (u *3 + 12) % 255
+        var g = (u *2+ 3) % 255;
+        var b = (u *7+ 2) % 255;
+        return "#" + r.toString(16) + g.toString(16) + b.toString(16);
+    }
+
+    $('#post').click(function() {
+        var message = $("#message").val();
+        socket.send("{\"type\" : " + "\"" + "text" + "\"" + ", \"username\" : " + "\"" + username + "\"" + ", \"uid\" : " + uid +  ", \"message\" : " + "\"" + message + "\"" +  "}" );
+        document.getElementById("message").value="";
+    })
+
+    $(document).keypress(function(event) {
+    if (event.key === "Enter") {
+        var message = $("#message").val();
+        socket.send("{\"type\" : " + "\"" + "text" + "\"" + ", \"username\" : " + "\"" + username + "\"" + ", \"uid\" : " + uid +  ", \"message\" : " + "\"" + message + "\"" +  "}" );
+        document.getElementById("message").value="";
+    }
+});
+
+
+    var temp = $("<p>Hello " + username + "</p>").addClass("text")
+    $(".box").prepend(temp);
+
+    socket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+</script>
+</html>
