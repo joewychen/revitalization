@@ -11,77 +11,121 @@
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
 
     <style type="text/css">
+
+    .title {
+        padding: 5vh 3vw 5vh 3vw;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .outbox {
+        margin: auto;
+        width: 50%;
+        height: 90vh;
+    }
+    #second {
+        /* position: relative; */
+        display: none;
+    }
+
+    .mybtn {
+        background-color:rgb(140, 228, 8);
+        /* padding: 0 5% 0 5%; */
+    }
+
     </style>
 
 </head>
 <body>
-    <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+    <div class="outbox">
+        <div class="title">
+            <h1>Revitalization</h1>
+        </div>
+        <div class="info">
+            <div id="first">
+                <div class="myform form ">
+                    <!-- <div class="logo mb-3">
+                        <div class="col-md-12 text-center">
+                           <h1>Login</h1>
+                        </div>
+                   </div> -->
+                  <form action="" method="post" name="login">
+                          <div class="form-group">
+                             <label for="exampleInputEmail1">Email address</label>
+                             <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                          </div>
+                          <div class="form-group">
+                             <label for="exampleInputEmail1">Password</label>
+                             <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                          </div>
+                
+                          <div class="col-md-12 text-center ">
+                             <button type="submit" class="btn mybtn btn-danger">Login</button>
+                          </div>
+                          <div class="col-md-12 ">
+                             <div class="login-or">
+                                <hr class="hr-or">
+                                <!-- <span class="span-or">or</span> -->
+                             </div>
+                          </div>
+                        
+                          <div class="form-group">
+                             <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+                          </div>
+                       </form>
+                
+               </div>
+            </div>
+            <div id="second">
+                <div class="myform form ">
+                    <form action="#" name="registration">
+                       <div class="form-group">
+                          <label for="exampleInputEmail1">First Name</label>
+                          <input type="text"  name="firstname" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Enter Firstname">
+                       </div>
+                       <div class="form-group">
+                          <label for="exampleInputEmail1">Last Name</label>
+                          <input type="text"  name="lastname" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Enter Lastname">
+                       </div>
+                       <div class="form-group">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                       </div>
+                       <div class="form-group">
+                          <label for="exampleInputEmail1">Password</label>
+                          <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                       </div>
+                       <div class="col-md-12 text-center mb-3">
+                          <button type="submit" class=" btn mybtn btn-danger">Get Started For Free</button>
+                       </div>
+                       <div class="col-md-12 ">
+                          <div class="form-group">
+                            <hr class="hr-or">
+                             <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
+                          </div>
+                       </div>
+                        </div>
+                    </form>
+                 </div>
+            </div>
+        </div>
+    </div>
     
 </body>
 <script>
+$("#signup").click(function() {
+    $("#first").fadeOut("fast", function() {
+        $("#second").fadeIn("fast");
+    });
+})
 
-    // setting up the canvas and one paper tool
-    let arrcolor = ["blue", "red", "yellow", "black", "purple", "pink", "brown", "green"]
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
-    var path = new paper.Path();
-    var uid = Date.now() % 10000;
-    path.strokeColor = Color(uid);
-    path.strokeWidth = 3;
-
-    // getting the URL (you may want to use for Exercise 3)
-    var url = window.location.href;
-
-    var socket = new WebSocket(
-        'ws://' + window.location.host + '/ws/draw');
-
-    tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-        // path.strokeColor = Color();
-       path.add(event.point);
-       // You may need to add code here if you want to pass any other information.
-       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
-    }
-
-    function Color(u) {
-        var r = (u *3 + 12) % 255
-        var g = (u *2+ 3) % 255;
-        var b = (u *7+ 2) % 255;
-        return "#" + r.toString(16) + g.toString(16) + b.toString(16);
-    }
-
-    
-
-    var idmap = new Map();
-    var alone = url.includes("size=small"); //笨
-    socket.onmessage = function(receivedMessage) {
-        if (alone) {
-            return;
-        }
-        var received = JSON.parse(receivedMessage.data);
-        console.log("Received: " + JSON.stringify(received));
-        // You will probably want to add some code here to draw more lines.
-        var otherid = received["uid"]
-        if (uid != otherid) {
-            if (!idmap.has(otherid)) {
-                var otherpath = new paper.Path();
-                otherpath.strokeColor = Color(otherid);
-                otherpath.strokeWidth = 3;
-                idmap.set(otherid, otherpath);
-            }
-            var otherpath = idmap.get(otherid);
-            // otherpath.strokeColor = Color(); //很秀
-            otherpath.add(new paper.Point(received["x"], received["y"]));
-            // path.add();
-        }
-    }
-
-    socket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
-
-    
+$("#signin").click(function() {
+    $("#second").fadeOut("fast", function() {
+        $("#first").fadeIn("fast");
+    });
+})
 
 </script>
 </html>
