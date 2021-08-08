@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>P4 Drawing</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+
+    <style type="text/css">
+    .outbox {
+            margin: auto;
+            /* width: 50%; */
+        }
+
+    .top {
+        position: fixed;
+        top: 0;
+    }
+    .smallimg {
+        width: 2vw;
+        height: 2vw;
+    }
+
+    .user {
+        margin: auto;
+        /* padding-top: 10%; */
+        /* width: 50%; */
+        height: 5vh;
+        text-align: center;
+
+    }
+
+    .content {
+        text-align: center;
+    }
+
+    .display {
+        margin: auto;
+        padding-top: 5%;
+    }
+
+    .myscroll {
+        height: 45vh;
+        overflow-y: auto;
+    }
+
+    .commentscroll {
+        margin-top: 1vh;
+        height: 15vh;
+        overflow-y: auto;
+    }
+
+    .down {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        height: 10vh;
+        width: 100%;
+    }
+
+    .downdiv {
+        flex: 1 1 auto;
+        text-align: center;
+        background-color: honeydew;
+    }
+
+    .comments{
+        text-align: left;
+        margin-left: 15%;
+    }
+
+    #heart {
+        display: none;
+    }
+
+    
+    </style>
+
+</head>
+
+
+<body>
+    <div class="outbox"> 
+        <div style="position: fixed; left: 0; padding:1vw; margin: 1vw" >
+            <input type="image" class="smallimg" src="/static/images/left-arrow.png">
+            <p style="display: inline; font-size: 2vw">Back</p>
+        </div>
+        <div style="position: fixed; right: 0; padding:1vw; margin: 1vw">
+            <input type="image" class="smallimg" src="/static/images/paper-plane.png">
+            <p style="display: inline; font-size: 2vw">Share</p>
+        </div>
+
+        <div class="display">
+            <div class="user">
+                <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">
+                <p style="display: inline; font-size: 3vh">Yiming</p>
+                <input type="image" class="smallimg" style="display: inline" src="/static/images/bookmark-white.png" alt="">
+            </div>
+            <div class="img">
+    
+            </div>
+            <div class="content myscroll">
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+                <div>asd</div>
+                <div>asdas</div>
+            
+                <!-- <p>Step1: </p>
+                <p>Step2: </p>
+                <p>Step3: </p>
+                <p>Step4: </p> -->
+            </div>
+            
+            <hr>
+
+            <div class="content commentscroll">
+                <div class="comments">
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
+                    <p style="display: inline;">Connor : asdasdadsadadas 99 hours ago</p>
+
+                </div>
+                <div class="comments">
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
+                    <p style="display: inline;">Joe : I like Yiming 99 hours ago</p>
+
+                </div>
+                <div class="comments">
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
+                    <p style="display: inline;">Name : asdasdadsadadas 99 hours ago</p>
+
+                </div>
+                <div class="comments">
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
+                    <p style="display: inline;">Yiming : asdasdadsadadas 99 hours ago</p>
+
+                </div>
+             
+            </div>
+            <div class="down">
+                <div class="downdiv">
+                    <input type="text" placeholder="Comment here" value="" id="textsend">
+                    <input type="button" value="Send" id="send">
+                </div>
+                <div class="downdiv">
+                    <input type="image" src="/static/images/heart.png" class="smallimg" id="noheart"> 
+                    <input type="image" src="/static/images/heart1.png" class="smallimg" id="heart"> 
+                    <p id="likeid">520</p>
+                </div>
+            </div>
+        </div>
+        
+
+
+    </div>
+    
+</body>
+<script>
+    $("#noheart").click(function() {
+        $("#noheart").hide();
+        $("#heart").show();
+        like(1, "#likeid");
+    });
+
+    $("#heart").click(function() {
+        $("#heart").hide();
+        $("#noheart").show();
+        like(-1, "#likeid");
+    });
+
+    $("#send").click(function() {
+        var newdiv = $("<div>").addClass("comments");
+        var newimg = $("")
+        
+    })
+    
+
+    function like(v, tid) {
+        var val = $(tid).text();
+        $(tid).text(parseInt(val) + v);
+    }
+
+
+
+</script>
+</html>
