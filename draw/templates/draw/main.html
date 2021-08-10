@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>P4 Drawing</title>
+    <title>Final Project Main Page</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
@@ -12,10 +12,7 @@
 
     <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-        .outbox {
-            margin: auto;
-            /* width: 50%; */
-        }
+        
 
         .title {
             padding: 20px;
@@ -61,7 +58,7 @@
         }
 
         .imagebox {
-            padding: 1% 15% 1% 15%;
+            padding: 1% 5% 1% 5%;
             position: relative;
             width: 50%;
             height: 30%;
@@ -82,12 +79,26 @@
         }
 
         .smallimg {
-            width: 2vw;
-            height: 2vw;
+            width: 3vh;
+            height: 3vh;
         }
         h1 {
             font-size: 8vw;
             font-family: 'Pacifico', cursive;
+        }
+
+        input[type=button] {
+            background-color: #CFDFC2;
+            border-radius: 30%;
+        }
+
+        .tagbtn {
+            margin: 1vh;
+            flex-wrap: wrap;
+        }
+
+        #tags {
+            margin: 2vh;
         }
 
 
@@ -99,11 +110,14 @@
         <div class="title"> <h1>Revitalization</h1></div>
         <div class="top">
             <div class="topmenu">
-                <input type="button" name="one" id="" value="Contest">
-                <input type="button" name="two" id="" value="Recommendations">
+                <input type="button" name="one" id="contest" value="Contest">
+                <!-- <input type="button" name="two" id="" value="Recommendations"> -->
                 <input type="search" name="one" id="" placeholder = "Search">
-                <input type="image" name="" id="" src="/static/images/search.png" class="smallimg" style="width: 1.5vw; height:1.5vw;">
+                <input type="image" name="" id="" src="/static/images/search.png" class="smallimg" style="width: 3vh; height:3vh;">
             </div>
+        </div>
+        <div id="tags">
+
         </div>
         <div id="display">
             
@@ -128,6 +142,9 @@
     
 </body>
 <script>
+
+    var imgmap = new Map()
+    
     var imgarr = ["https://i.imgur.com/bFX3xGt.png",
         "https://i.imgur.com/XgannWs.png",
         "https://i.imgur.com/vZlrt1X.png",
@@ -137,17 +154,94 @@
         "https://i.imgur.com/TdUVvqr.png",
         "https://i.imgur.com/7WfoOeg.jpg",
         "/static/images/images/nuts shell 01.png" ]
-    
 
-    function addimages() {
-        for (var img of imgarr) {
-            var imgpiece = $("<img src=\"" + img + "\">").addClass("img");
+    imgmap["recommend"] = imgarr;
+    imgmap["nut shell"] = ["/static/images/images/nuts shell 01.png",
+    "/static/images/images/nuts shell 02.png",
+    "/static/images/images/nuts shell 03.png",
+    "/static/images/images/nuts shell 04.png",
+    "/static/images/images/nuts shell 05.png",
+    "/static/images/images/nuts shell 06.png",
+    "/static/images/images/nuts shell 07.png",
+    "/static/images/images/nuts shell 08.png",
+    "/static/images/images/nuts shell 09.png",
+    "/static/images/images/nuts shell 10.png"]
+
+    imgmap["bottle"] = ["/static/images/cs160/bottles/bottle1.jpg",
+    "/static/images/cs160/bottles/bottle2.jpg",
+    "/static/images/cs160/bottles/bottle3.jpg",
+    "/static/images/cs160/bottles/bottle4.jpg",
+    "/static/images/cs160/bottles/bottle5.jpg",
+    "/static/images/cs160/bottles/bottle6.jpg",
+    "/static/images/cs160/bottles/bottle7.jpg",
+    "/static/images/cs160/bottles/bottle8.jpg"]
+
+    imgmap["clothes"] = ["/static/images/cs160/clothes/clothes1.jpg",
+    "/static/images/cs160/clothes/clothes2.jpg",
+    "/static/images/cs160/clothes/clothes3.jpg",
+    "/static/images/cs160/clothes/clothes4.jpg",
+    "/static/images/cs160/clothes/clothes5.jpg",
+    "/static/images/cs160/clothes/clothes6.jpg",]
+    
+    imgmap["paper"] = ["/static/images/paper/paper1.png",
+    "/static/images/paper/paper2.png",
+    "/static/images/paper/paper3.png",
+    "/static/images/paper/paper4.png",
+    "/static/images/paper/paper5.png",
+    "/static/images/paper/paper6.png",
+    "/static/images/paper/paper7.png",
+    "/static/images/paper/paper8.png"]
+
+    var namemap = new Map();
+    namemap["recommend"] = ["Make Bookend with Heels", "Plastic Bottle Hanging Plant Pot", " Cardbiard Phone Holder", "Egg Carton Seed Pot ", "Tissue Box with Newspaper",
+     "Newspaper to Star!", "Painted Shelf (cardboard)", "Newspaper to Bedroom Decoration", "Art with Pistachio"]
+    namemap["bottle"] = ["Money jar", "Bibelot", "flower pot", "lampshade", "Make a decoration with bottles", "small lampshade", "pen container", "lovely pencil pot"]
+    namemap["paper"] = ["Colorful Bowl from Flyers", "Small Item Holder(paper)", 
+    "Newspaper Box Organizer", "Mood Lamp with Telephone Book" , "Letter Room Decor Using Old Books", 
+    "Newspaper Gift Wrap", "Patio String Crafts (Cartoon)", "Necklace, bracelet beads with Magazines " ]
+    namemap["nut shell"] =["Art with Pistachio", "Beatiful girl!", "Make a flower", "Flowers", "4", "Nacklace", "Earrings", "Vase", "3D drawing", "Little decor" ]
+    namemap["clothes"] = ["Use an old shirt as a cushion", "Denim pocket", "Turn your sweater into a pillowcase", "Shirts make beautiful carpets", "Make a new bag with old T-shirt", "Make warm gloves out of old clothes"]
+    function addimages(key) {
+        var arr = imgmap[key];
+        var namearr = namemap[key];
+        for (let i = 0; i < arr.length; i++) {
+            img = arr[i];
+            // "<img src=\"" + img + "\">"
+            var imgpiece = $("<input type=\"image\" src=\"" + img + "\">").addClass("img");
+            imgpiece.click(function() {
+                window.location.href = "./postprofile";
+            })
             var element = $("<div>").addClass("imagebox");
+            var title = $("<p>" + namearr[i] + "</p>");
             element.append(imgpiece);
+            element.append(title);
             $("#display").append(element);
         }
     }
-    addimages();
+    addimages("recommend");
+
+    $("#contest").click(function() {
+        window.location.href = "./contest";
+    })
+
+    var tagarr = ["recommend", "nut shell", "bottle", "paper", "shoes",
+     "clothes", "plastic"]
+
+    function addtags() {
+        for (var tagname of tagarr) {
+            var tag = $("<input type=\"button\" id=\""+ tagname +"\" value=\"#" + tagname + "\">").addClass("tagbtn");
+            tag.click({param1: tagname},function(e) {
+                filter(e.data.param1);
+            })
+            $("#tags").append(tag);
+        }
+    }
+
+    function filter(key) {
+        $("#display").empty();
+        addimages(key);
+    }
+    addtags();
 
 </script>
 </html>

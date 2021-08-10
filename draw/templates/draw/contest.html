@@ -4,24 +4,250 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>P4 Drawing</title>
+    <title>Contest</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
-    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
-
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}"> -->
+    <!-- <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <style type="text/css">
+    .outbox {
+        margin: auto;
+        /* width: 50%; */
+    }
+    .smallimg {
+        width: 4.5vw;
+        height: 4.5vw;
+    }
+    .top {
+        padding: 5vh;
+        display: fixed;
+        height: 20vh;
+        text-align: center;
+    }
+    
+    .down {
+        /* position: fixed; */
+        display: flex;
+        bottom: 0;
+        width: 100%;
+        stroke-width: 1px;
+        /* background-color:lightyellow; */
+    }
+
+    .downdiv {
+        padding: 3vh;
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    input[type=button] {
+        background-color: #CFDFC2;
+        border-radius: 30%;
+    }
+
+    
+    .displayitem {
+        width: 70%;
+        margin: 5vh auto auto auto;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;        
+        /* margin: auto; */
+        /* padding: 2vw; */
+        /* height: 70vh; */
+    }
+    .displayimage {
+        /* margin: 3vh; */
+        /* margin: 5px; */
+        width: 95%;
+        height: 95%;
+        
+    }
+
+    .rightdivitem {
+        /* flex: 1 1 auto; */
+        text-align: center;
+
+    }
+
+    .leftdivitem {
+        text-align: center;
+    }
+    
+    .display {
+        padding-top: 10%;
+    }
+    
+    body {
+        background: rgb(234,253,255);
+        background: radial-gradient(circle, rgba(234,253,255,1) 50%, rgba(238,218,255,1) 73%, rgba(242,191,255,1) 100%);
+    }
+
+    .contestbg{
+        background-image: url("/static/images/images/contest title.png");
+        opacity: 0.5;
+        height: 100px;
+    }
+
+    .zhan {
+        position: relative;
+        top: -30px;
+        right: 20px;
+        float:right;
+    }
 
 
     </style>
 
 </head>
 <body>
-    
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header contestbg">
+            <h3 class = "center" style="text-align: center; ">Contest Description</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            
+          
+            
+        </div>
+        <div class="modal-body">
+            Create something out of the nut shells lying around your neighborhood, and showcase your idea here! Remember to take clear photos to document the process. It’s time to get creative!
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn" data-dismiss="modal" value = "Close" style = "stroke-width: 1px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="outbox">
+        <div style="position: fixed; left: 0; padding:1vw; margin: 1vw" >
+            <input type="image" class="smallimg" src="/static/images/left-arrow.png" id="back">
+            <p style="display: inline; font-size: 3vw">Back</p>
+        </div>
+        
+        <div class="top">
+            <h1> Weekly Contest </h1>
+            <p> Time:<span id="contestTimer"></span></p>
+            <p style="display: inline">Topic: Nut shells</p>
+            <input type="button" value="detail" style="display: inline" data-toggle="modal" id="detail" data-target="#exampleModalCenter">
+        </div>
+        <!-- <br><br><br><br><br><br><br><br><br><br> -->
+        <div class="display" id="display">
+
+        </div>
+
+        <div class="down">
+            <div class="downdiv">
+                <input type="button" name="" id="participate" value="Participate">
+            </div>
+            <div class="downdiv">
+                <input type="button" name="" id="result" value="See results">
+            </div>
+        </div>
+
+    </div>
     
 </body>
 <script>
+    var arr = ["/static/images/images/nuts shell 06.png", "/static/images/images/nuts shell 02.png", "/static/images/images/nuts shell 03.png", "/static/images/images/nuts shell 04.png", "/static/images/images/nuts shell 07.png"];
+    var description = ["Nacklace", "Drawing", "Lotus", "Plum Blossom", "Earrings"];
+    var zans = ["999", "777", "123", "21", "10"];
+    for (var i = 0; i < arr.length; i++) {
+        var newdiv = $("<div>").addClass("displayitem");
+        var leftdiv = $("<div>").addClass("leftdivitem");
+        var img = $("<img src=" + "\"" + arr[i] + "\">").addClass("displayimage");
+        leftdiv.append(img)
+        var rightdiv = $("<div id=" + "\"" + i + "\"" + ">").addClass("rightdivitem");
+        var newp = $("<p style=\"font-size: 4vh\">" + description[i] + "</p>");
+        var zandiv = $("<div class=\"zhan\" id=\"zandiv" + i + "\"" + ">");
+        
+        var nozan = $("<input type=\"image\" src=\"/static/images/nolike.png\" class=\"smallimg\" id=\"nozan" + i + "\">");
+        var zan = $("<input type=\"image\" src=\"/static/images/like.png\" style=\"display:none\" class=\"smallimg\" id=\"zan" + i + "\">");
+        
+        zandiv.append(zan);
+        zandiv.append(nozan);
+        zandiv.append("<p style=\"font-size:3vh\" id=\"zanshu" + i + "\"" + ">" + zans[i] + "</p>");
+        let curr = i;
+        nozan.click(function() {
+            budianzan(curr);
+        });
+        zan.click(function() {
+            dianzan(curr);
+        })
+        
+        rightdiv.append(newp);
+        rightdiv.append(zandiv);
+        
+        newdiv.append(rightdiv);
+        // newdiv.append(nozan);
+        // newdiv.append(zan);
+        newdiv.append(leftdiv);
+        $("#display").append(newdiv);
+    }
 
+    function dianzan(i) {
+        $("#zan" + i).hide();
+        $("#nozan" + i).show();
+        like(-1, "#zanshu" + i);
+    }
 
+    function budianzan(i) {
+        $("#zan" + i).show();
+        $("#nozan" + i).hide();
+        like(1, "#zanshu" + i);
+    }
+
+    function like(v, tid) {
+        var val = $(tid).text();
+        $(tid).text(parseInt(val) + v);
+    }
+
+    // Set the date we're counting down to
+    var countDownDate = new Date("Aug 15, 2021 00:00:00").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+    // Get today's date and time
+    var now = new Date().getTime();
+    
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Output the result in an element with id="demo"
+    document.getElementById("contestTimer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    
+    // If the count down is over, write some text 
+    if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("contestTimer").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+
+    $("#back").click(function() {
+        window.history.back()
+    })
+
+    $("#participate").click(function(){
+        window.location.href = "./post";
+    })
+
+    
 </script>
 </html>

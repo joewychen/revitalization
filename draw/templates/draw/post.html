@@ -1,0 +1,192 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>P4 Drawing</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style type="text/css">
+    .outbox {
+            margin: auto;
+            /* width: 50%; */
+            font-size: 20px;
+        }
+
+    .top {
+        padding: 5vh 0 0 0;
+        margin: auto;
+        width: 80%;
+    }
+
+    input[type=text]{
+        max-width: 100%;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+    }
+    
+    .textbox {
+        padding: 5vw;
+        max-width: 100%;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+    }
+
+    .topdiv {
+        margin: 3vh;
+        /* text-align: center; */
+    }
+    .down {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        stroke-width: 1px;
+        /* background-color:lightyellow; */
+    }
+    .addbtn {
+        text-align: center;
+    }
+
+        
+    .smallimg {
+        width: 4.5vw;
+        height: 4.5vw;
+        margin: 0 1vw 0 0;
+    }
+
+    input[type=image]{
+        border-radius:40%;
+        border: 4px black;
+    }
+
+    .downdiv1{
+        border: 2px solid;
+        border-radius: 40%;
+        margin-left:65%;
+        margin-bottom:5%;
+        background-size:cover;
+        background:url("https://i.imgur.com/J1Hfqtz.png");
+        background-repeat: no-repeat;
+        width:180px;
+        height:70px;
+        cursor:pointer;
+    }
+
+    .stepdiv {
+        margin: auto;
+        width: 60%;
+        text-align: center;
+    }
+
+    .tagtextlayout {
+        margin: 0 1vw 0 1vw;
+        display: inline;
+    }
+
+    #tag {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .inlineptag {
+        margin: 2vh 0 0 0;
+        flex: 1 1 auto;
+        text-align: left;
+    }
+    .rightdiv {
+        flex: 1 1 auto;
+        display: inline;
+    }
+    .block {
+        position: relative;
+        display: block;
+    }
+    </style>
+
+</head>
+    <div class="outbox">
+        <div id ="goback" style="position: fixed; right: 0; padding:1vw; margin: 1vw">
+            <input type="image" class="smallimg" src="/static/images/cross.png">
+        </div>
+
+        <div class="top">
+            <div class="topdiv" id="tag">Tags:
+            </div>
+            <div class="topdiv">
+                <input type="text" name="" id="tagtext">
+                <input type="image" class="smallimg" src="/static/images/add.png" id="addtag">
+            </div>
+            <div class="topdiv">Title:
+                <input type="text" name="" id="title">
+            </div>
+            <div class="topdiv">Description:
+                <input type="text" id="description" class="textbox">
+            </div>
+
+        </div>
+        <div class="steps">
+            
+        </div>
+        
+        <div class="addbtn">
+            <input type="button" value="add step" id="addb">
+        </div>
+
+        <div class="downdiv1">
+        </div>
+
+
+    </div>
+
+<body>
+
+    
+    
+    
+</body>
+
+<script>
+    var curr = 1;
+    $("#addb").click(function() {
+        var newdiv = $("<div class=\"stepdiv\">")
+        var newp = $("<p>step" + curr + ":</p>").addClass("inlineptag")
+        curr += 1
+        newdiv.append(newp);
+        var rightdiv = $("<div>").addClass("rightdiv");
+        var rimg = $("<input type=\"image\" src=\"/static/images/upimage.png\" id=\"upimage\">").addClass("smallimg");
+        rimg.click(function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var contents = e.target.result;
+            };
+        })
+        var textb = $("<input type=\"text\" id=\"description\" class=\"textbox\">");
+        rightdiv.append(rimg);
+        rightdiv.append(textb);
+        var s = $(".steps");
+        newdiv.append(rightdiv);
+        s.append(newdiv); 
+    })
+
+    $("#goback").click(function () {
+        history.back();
+    })
+
+    $("#addtag").click(function() {
+        var tagcontent = $("#tagtext").val();
+        var tag = $("<p>"+"#"+tagcontent+"</p>").addClass("tagtextlayout");
+        $("#tag").append(tag);
+        $("#tagtext").val("");
+    })
+
+
+
+</script>
+</html>

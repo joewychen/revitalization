@@ -4,12 +4,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>P4 Drawing</title>
+    <title>Profile</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style type="text/css">
     .outbox {
             margin: auto;
@@ -21,8 +20,8 @@
         top: 0;
     }
     .smallimg {
-        width: 2vw;
-        height: 2vw;
+        width: 2.5vw;
+        height: 2.5vw;
     }
 
     .user {
@@ -40,32 +39,32 @@
 
     .display {
         margin: auto;
-        padding-top: 5%;
+        padding-top: 2%;
     }
 
     .myscroll {
-        height: 45vh;
+        height: 60vh;
         overflow-y: auto;
+        
     }
 
     .commentscroll {
         margin-top: 1vh;
-        height: 15vh;
+        height: 20vh;
         overflow-y: auto;
+        
     }
 
     .down {
         display: flex;
         position: fixed;
         bottom: 0;
-        height: 10vh;
         width: 100%;
     }
 
     .downdiv {
         flex: 1 1 auto;
         text-align: center;
-        background-color: honeydew;
     }
 
     .comments{
@@ -77,6 +76,25 @@
         display: none;
     }
 
+    .img {
+        margin: auto;
+        width: 35vw;
+        height: 35vw;
+    }
+    .bgc{
+        background-color: #F8EFF7;
+    }
+    .commentsbg{
+        background-color: #E2CED9;
+    }
+
+    .btc{
+        background-color: #A87D87;
+    }
+    p {
+        margin: 0 5vw 0 5vw;
+    }
+
     
     </style>
 
@@ -84,111 +102,108 @@
 
 
 <body>
+
+    
+
+
+
     <div class="outbox"> 
         <div style="position: fixed; left: 0; padding:1vw; margin: 1vw" >
-            <input type="image" class="smallimg" src="/static/images/left-arrow.png">
-            <p style="display: inline; font-size: 2vw">Back</p>
+            <input type="image" class="smallimg" src="/static/images/left-arrow.png" id="back">
+            <p style="display: inline; font-size: 3vw">Back</p>
         </div>
         <div style="position: fixed; right: 0; padding:1vw; margin: 1vw">
             <input type="image" class="smallimg" src="/static/images/paper-plane.png">
-            <p style="display: inline; font-size: 2vw">Share</p>
+            <p style="display: inline; font-size: 3vw" >Share</p>
+
         </div>
 
-        <div class="display">
+        <div class="display bgc" >
             <div class="user">
                 <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">
                 <p style="display: inline; font-size: 3vh">Yiming</p>
                 <input type="image" class="smallimg" style="display: inline" src="/static/images/bookmark-white.png" alt="">
             </div>
-            <div class="img">
-    
-            </div>
-            <div class="content myscroll">
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
-                <div>asd</div>
-                <div>asdas</div>
             
-                <!-- <p>Step1: </p>
-                <p>Step2: </p>
-                <p>Step3: </p>
-                <p>Step4: </p> -->
+            <div class="content myscroll" >
+                <div class="img">
+                    <img src="/static/images/images1/profile/profile1.png" class="img" alt="">
+                </div>
+                <div> <h1>Cord/Wires Organizer </h1></div>
+                <br>
+                <div class = "step"> <b>Step 1 </b> 
+                    <p>Collect empty toilet paper rolls and a shoe boxe: Use a number of empty rolls that fits into 
+                        the shoe box. For most boxes, 16-20 rolls should be enough. I used 20 rolls in total (2 for the bigger cords, and 18 for my smaller cords).
+                        Other materials: Glue or tape that works well with paper, scissors, piece of cardbaord in similar size to the box's interior.
+                        Once you've collected the material, you're ready to start!
+                    </p> 
+                    <div class="img">
+                        <img src="/static/images/images1/profile/profile1.png" class="img" alt="">
+                    </div>
+                </div>
+                <br>
+                <div class = "step"> <b>Step 2 </b> 
+                    <p> Create a divider using another piece of cardboard: First, measure the length and height of the box. Then, cut the cardboard into the measured dimensions. 
+                         Finally, glue the sides of the cardboard to the walls of the box as in the picture. </p> 
+                    <div class="img">
+                        <img src="/static/images/images1/instruction2/profile0.png" class="img" alt="">
+                    </div>
+                </div>
+                <br>
+                <div class = "step"> <b>Step 3 </b> 
+                    <p> Stack the rolls into the larger side of the box until it is filled. These tubes will be used to store the smaller cords. 
+                        You're finished! Now you can start putting in the cords.  </p> 
+                    <div class="img">
+                        <img src="/static/images/images1/instruction2/overview3.png" class="img" alt="">
+                    </div>
+                </div>
+                <br>
+                <div class = "step"> <b>Step 4 </b> 
+                    <p> You can take out each tube and put your rolled up wire inside. For the thicker wires, I make longer rolls, and stack them on the other side of the   </p> 
+                    <div class="img">
+                        <img src="/static/images/images1/instruction2/overview3.png" class="img" alt="">
+                    </div>
+                </div>
+                <div class = "step"> <b>Final Notes</b> 
+                    <p> Looking forward to reading the comments about your project, and let me know if you have 
+                        suggestions to improve this idea!  </p> 
+                 
+                </div>
+                
+               
+            
+            
             </div>
             
             <hr>
 
-            <div class="content commentscroll">
+            <div class="content commentscroll" id="commenting"  >
                 <div class="comments">
-                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
-                    <p style="display: inline;">Connor : asdasdadsadadas 99 hours ago</p>
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/user.png" alt="">                     
+                    <p style="display: inline;">Connor : asdasdadsadadas</p>
 
                 </div>
                 <div class="comments">
-                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
-                    <p style="display: inline;">Joe : I like Yiming 99 hours ago</p>
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/user.png" alt="">                     
+                    <p style="display: inline;">Joe : I like Yiming</p>
 
                 </div>
                 <div class="comments">
-                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
-                    <p style="display: inline;">Name : asdasdadsadadas 99 hours ago</p>
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/user.png" alt="">                     
+                    <p style="display: inline;">Name : asdasdadsadad</p>
 
                 </div>
                 <div class="comments">
-                    <input type="image" class="smallimg" style="display: inline" src="/static/images/images/cat1.jpeg" alt="">                     
-                    <p style="display: inline;">Yiming : asdasdadsadadas 99 hours ago</p>
+                    <input type="image" class="smallimg" style="display: inline" src="/static/images/user.png" alt="">                     
+                    <p style="display: inline;">Yiming : asdasdadsadadas</p>
 
                 </div>
              
             </div>
-            <div class="down">
-                <div class="downdiv">
+            <div class="down commentsbg" >
+                <div class="downdiv" style="padding: 1vw;">
                     <input type="text" placeholder="Comment here" value="" id="textsend">
-                    <input type="button" value="Send" id="send">
+                    <input class = "btc" type="button" value="Send" id="send">
                 </div>
                 <div class="downdiv">
                     <input type="image" src="/static/images/heart.png" class="smallimg" id="noheart"> 
@@ -197,10 +212,9 @@
                 </div>
             </div>
         </div>
-        
-
-
     </div>
+
+    
     
 </body>
 <script>
@@ -218,15 +232,39 @@
 
     $("#send").click(function() {
         var newdiv = $("<div>").addClass("comments");
-        var newimg = $("")
-        
+        var newimg = $("<input type=\"image\" class=\"smallimg\" style=\"display: inline\" src=\"/static/images/user.png\" alt=\"\">");
+        newdiv.append(newimg);
+        var textsend = $("#textsend");
+        var newp = $("<p style=\"display: inline;\">" + " user: " + textsend.val() + "</p>");
+        newdiv.append(newp);
+        textsend.val("");
+        $("#commenting").prepend(newdiv);
     })
+
+
     
 
     function like(v, tid) {
         var val = $(tid).text();
         $(tid).text(parseInt(val) + v);
     }
+
+    $(document).keypress(function(event) {
+        if (event.key === "Enter") {
+            var newdiv = $("<div>").addClass("comments");
+            var newimg = $("<input type=\"image\" class=\"smallimg\" style=\"display: inline\" src=\"/static/images/user.png\" alt=\"\">");
+            newdiv.append(newimg);
+            var textsend = $("#textsend");
+            var newp = $("<p style=\"display: inline;\">" + " user: " + textsend.val() + "</p>");
+            newdiv.append(newp);
+            textsend.val("");
+            $("#commenting").prepend(newdiv);
+        }
+    })
+
+    $("#back").click(function () {
+        window.history.back()
+    })
 
 
 
