@@ -12,14 +12,19 @@
 
     <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-        
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;800&display=swap');
+    body {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 400 bold;
+    }
 
         .title {
             padding: 20px;
             width: 100%;
             height: 20%;
             text-align: center;
-            background-color: #f2f8fe;
+            background-color: #56F5CF;
+            color: #FFFFFF;
 
         }
 
@@ -28,7 +33,7 @@
             width: 100%;
             height: 20%;
             text-align: center;
-            background-color: #f2f8fe
+            background-color: #56F5CF;
 ;  
         }
 
@@ -54,14 +59,17 @@
             margin-top: 20px;
             width: 100%;
             /* overflow:scroll; */
-            background-color: #eef4f9;
+            background-color: #56F5CF;
         }
 
         .imagebox {
-            padding: 1% 5% 1% 5%;
+            margin: 1%;
+            padding: 5%;
             position: relative;
-            width: 50%;
+            width: 45%;
             height: 30%;
+            box-shadow: 5px 5px 5px #888888;
+
         }
 
         .img {
@@ -88,8 +96,9 @@
         }
 
         input[type=button] {
-            background-color: #CFDFC2;
+            background-color: #CFB1F4;
             border-radius: 30%;
+            
         }
 
         .tagbtn {
@@ -100,6 +109,24 @@
         #tags {
             margin: 2vh;
         }
+        .nobp {
+        margin-bottom: 0;
+        }
+
+        .darkgreen {
+            background-color: darkgreen;
+        }
+
+        .pfont {
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            font-size: 3vh;
+        }
+
+        .titlelogo {
+            width: 8vh;
+            height: 8vh;
+        }
 
 
     </style>
@@ -107,10 +134,11 @@
 </head>
 <body>
     <div class="outbox">
-        <div class="title"> <h1>Revitalization</h1></div>
+        <div class="title">
+        <h1><input type="image" name="" id="home" src="{% static 'images/logo.png' %}" class="titlelogo">  Revitalization</h1></div>
         <div class="top">
             <div class="topmenu">
-                <input type="button" name="one" id="contest" value="Contest">
+                 <!--<input type="button" name="one" id="contest" value="Contest"> -->
                 <!-- <input type="button" name="two" id="" value="Recommendations"> -->
                 <input type="search" name="one" id="" placeholder = "Search">
                 <input type="image" name="" id="" src="/static/images/search.png" class="smallimg" style="width: 3vh; height:3vh;">
@@ -126,16 +154,21 @@
         
         <div class="downmenu">
             <div class="downdiv">
-                <img src="{% static 'images/store.png' %}" class="smallimg" alt="">
-                <p>Store</p>
+                <input type="image" name="" id="home" src="{% static 'images/logo.png' %}" class="smallimg">
+                <p class="nobp">Home</p>
             </div>
             <div class="downdiv">
-                <img src="/static/images/email.png" class="smallimg" alt="">
-                <p>Message</p>
+                <input type="image" name="" id="contest" src="{% static 'images/contest.png' %}" class="smallimg">
+                <p class="nobp">Contest</p>
+            </div>
+            
+            <div class="downdiv">
+                <input type="image" name="" id="post" src="{% static 'images/edit.png' %}" class="smallimg">
+                <p class="nobp">Post</p>
             </div>
             <div class="downdiv">
                 <img src="/static/images/user.png" class="smallimg" alt="">
-                <p>Me</p>
+                <p class="nobp">Me</p>
             </div>
         </div>
     </div>
@@ -143,9 +176,17 @@
 </body>
 <script>
 
+    var url = window.location.href;
+    var urlarr = url.split("=");
+    var defaultkey = "recommend";
+    if (urlarr.length > 1) {
+        defaultkey= urlarr[1];
+    }
+
     var imgmap = new Map()
     
-    var imgarr = ["https://i.imgur.com/bFX3xGt.png",
+    var imgarr = ["/static/images/profile/profile0.png", 
+        "https://i.imgur.com/bFX3xGt.png",
         "https://i.imgur.com/XgannWs.png",
         "https://i.imgur.com/vZlrt1X.png",
         "https://i.imgur.com/Tejyh3J.png",
@@ -156,7 +197,7 @@
         "/static/images/images/nuts shell 01.png" ]
 
     imgmap["recommend"] = imgarr;
-    imgmap["nut shell"] = ["/static/images/images/nuts shell 01.png",
+    imgmap["nutshell"] = ["/static/images/images/nuts shell 01.png",
     "/static/images/images/nuts shell 02.png",
     "/static/images/images/nuts shell 03.png",
     "/static/images/images/nuts shell 04.png",
@@ -193,14 +234,15 @@
     "/static/images/paper/paper8.png"]
 
     var namemap = new Map();
-    namemap["recommend"] = ["Make Bookend with Heels", "Plastic Bottle Hanging Plant Pot", " Cardbiard Phone Holder", "Egg Carton Seed Pot ", "Tissue Box with Newspaper",
+    namemap["recommend"] = ["Cord/Wires Organizer", "Make Bookend with Heels", "Plastic Bottle Hanging Plant Pot", " Cardbiard Phone Holder", "Egg Carton Seed Pot ", "Tissue Box with Newspaper",
      "Newspaper to Star!", "Painted Shelf (cardboard)", "Newspaper to Bedroom Decoration", "Art with Pistachio"]
     namemap["bottle"] = ["Money jar", "Bibelot", "flower pot", "lampshade", "Make a decoration with bottles", "small lampshade", "pen container", "lovely pencil pot"]
     namemap["paper"] = ["Colorful Bowl from Flyers", "Small Item Holder(paper)", 
     "Newspaper Box Organizer", "Mood Lamp with Telephone Book" , "Letter Room Decor Using Old Books", 
     "Newspaper Gift Wrap", "Patio String Crafts (Cartoon)", "Necklace, bracelet beads with Magazines " ]
-    namemap["nut shell"] =["Art with Pistachio", "Beatiful girl!", "Make a flower", "Flowers", "4", "Nacklace", "Earrings", "Vase", "3D drawing", "Little decor" ]
+    namemap["nutshell"] =["Art with Pistachio", "Beatiful girl!", "Make a flower", "Flowers", "4", "Nacklace", "Earrings", "Vase", "3D drawing", "Little decor" ]
     namemap["clothes"] = ["Use an old shirt as a cushion", "Denim pocket", "Turn your sweater into a pillowcase", "Shirts make beautiful carpets", "Make a new bag with old T-shirt", "Make warm gloves out of old clothes"]
+    
     function addimages(key) {
         var arr = imgmap[key];
         var namearr = namemap[key];
@@ -208,40 +250,65 @@
             img = arr[i];
             // "<img src=\"" + img + "\">"
             var imgpiece = $("<input type=\"image\" src=\"" + img + "\">").addClass("img");
-            imgpiece.click(function() {
-                window.location.href = "./postprofile";
-            })
+
             var element = $("<div>").addClass("imagebox");
-            var title = $("<p>" + namearr[i] + "</p>");
+            var title = $("<p id=\"" + "p" + namearr[i] + "\">" + namearr[i] + "</p>").addClass("pfont");
             element.append(imgpiece);
             element.append(title);
+            element.click(function() {
+                window.location.href = "./postprofile";
+            })
             $("#display").append(element);
         }
     }
-    addimages("recommend");
+    addimages(defaultkey);
 
     $("#contest").click(function() {
         window.location.href = "./contest";
     })
 
-    var tagarr = ["recommend", "nut shell", "bottle", "paper", "shoes",
+    var tagarr = ["recommend", "nutshell", "bottle", "paper", "shoes",
      "clothes", "plastic"]
+    
+    var curr = defaultkey;
 
     function addtags() {
         for (var tagname of tagarr) {
-            var tag = $("<input type=\"button\" id=\""+ tagname +"\" value=\"#" + tagname + "\">").addClass("tagbtn");
+            var tag = $("<input type=\"button\" id=\""+ tagname +"\" this.style.color=" + "\"white\"" +  "value=\"#" + tagname + "\">").addClass("tagbtn");
             tag.click({param1: tagname},function(e) {
+                // let k = tagname;
+                // $("#" + k).css("background-color", "darkgreen");
+                $("#" + curr).css("background-color", "#CFB1F4");
+                $("#" + curr).css("color", "black");
+                $("#" + e.data.param1).css("background-color", "#832FED");
+                $("#" + e.data.param1).css("color", "white");
+
+                
+                curr = e.data.param1;
                 filter(e.data.param1);
             })
             $("#tags").append(tag);
         }
+        $("#" + defaultkey).css("background-color", "#832FED");
+        $("#" + defaultkey).css("color", "white");
+
     }
+
+
 
     function filter(key) {
         $("#display").empty();
         addimages(key);
     }
     addtags();
+
+    $("#home").click(function() {
+        window.location.href = "./";
+    })
+
+    $("#post").click(function(){
+        window.location.href = "./post";
+    })
 
 </script>
 </html>

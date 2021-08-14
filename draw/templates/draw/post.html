@@ -4,12 +4,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>P4 Drawing</title>
+    <title>Post</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+    body {
+        font-family: 'Nunito', sans-serif;
+        background-color: #B5FBEA;
+    }
     .outbox {
             margin: auto;
             /* width: 50%; */
@@ -66,7 +71,8 @@
         border: 4px black;
     }
 
-    .downdiv1{
+
+    /* .downdiv1{
         border: 2px solid;
         border-radius: 40%;
         margin-left:65%;
@@ -77,7 +83,7 @@
         width:180px;
         height:70px;
         cursor:pointer;
-    }
+    } */
 
     .stepdiv {
         margin: auto;
@@ -103,10 +109,34 @@
     .rightdiv {
         flex: 1 1 auto;
         display: inline;
+        padding: 3vh;
     }
     .block {
         position: relative;
         display: block;
+    }
+
+    #post {
+        margin: 3vh;
+    }
+    .downdiv1 {
+        width: 100%;
+        text-align: right;
+    }
+
+    .cross {
+        position: relative;
+        top: -20px;
+        left: 120px;
+        width: 2vh;
+        height: 2vh;
+    }
+    .steps {
+        margin: auto;
+    }
+    input[type=button] {
+        background-color: #F8B22C;
+        border-radius: 10%;
     }
     </style>
 
@@ -120,7 +150,8 @@
             <div class="topdiv" id="tag">Tags:
             </div>
             <div class="topdiv">
-                <input type="text" name="" id="tagtext">
+                <p style="display: inline;">#</p>
+                <input type="text" name="" id="tagtext" placeholder="">
                 <input type="image" class="smallimg" src="/static/images/add.png" id="addtag">
             </div>
             <div class="topdiv">Title:
@@ -140,6 +171,7 @@
         </div>
 
         <div class="downdiv1">
+            <input type="button" value="Post" id="post">
         </div>
 
 
@@ -153,14 +185,35 @@
 </body>
 
 <script>
+    newp_arr = [];
     var curr = 1;
+    addstep();
     $("#addb").click(function() {
+        addstep();
+    })
+
+    function addstep() {
         var newdiv = $("<div class=\"stepdiv\">")
-        var newp = $("<p>step" + curr + ":</p>").addClass("inlineptag")
+        var newp = $("<p>step" + curr + "</p>").addClass("inlineptag");
+        newp_arr.push(newp);
         curr += 1
         newdiv.append(newp);
         var rightdiv = $("<div>").addClass("rightdiv");
         var rimg = $("<input type=\"image\" src=\"/static/images/upimage.png\" id=\"upimage\">").addClass("smallimg");
+        var rcross = $("<input type=\"image\" src=\"/static/images/cross.png\" id=\"cross" + curr + "\">").addClass("cross");
+        rcross.click(function() {
+            const index = newp_arr.indexOf(newp);
+            newp_arr.splice(index, 1);
+            newdiv.remove();
+            var now = 1;
+            
+            for (item of newp_arr) {
+                item.text("step" + now);
+                now += 1;
+            }
+            curr = now
+        })
+
         rimg.click(function() {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -168,23 +221,29 @@
             };
         })
         var textb = $("<input type=\"text\" id=\"description\" class=\"textbox\">");
+        rightdiv.append(rcross);
         rightdiv.append(rimg);
         rightdiv.append(textb);
         var s = $(".steps");
         newdiv.append(rightdiv);
         s.append(newdiv); 
-    })
+    }
 
-    $("#goback").click(function () {
+    $("#goback").click(function() {
         history.back();
     })
 
     $("#addtag").click(function() {
         var tagcontent = $("#tagtext").val();
+        if (tagcontent == "") {
+            alert("no empty tag");
+            return;
+        }
         var tag = $("<p>"+"#"+tagcontent+"</p>").addClass("tagtextlayout");
         $("#tag").append(tag);
         $("#tagtext").val("");
     })
+
 
 
 

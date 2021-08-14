@@ -15,6 +15,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;800&display=swap');
+    body {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 800;
+    }
+
     .outbox {
         margin: auto;
         /* width: 50%; */
@@ -26,8 +32,10 @@
     .top {
         padding: 5vh;
         display: fixed;
-        height: 20vh;
+        /* height: 20vh; */
         text-align: center;
+        background-color: #56F5CF;
+
     }
     
     .down {
@@ -39,17 +47,30 @@
         /* background-color:lightyellow; */
     }
 
-    .downdiv {
-        padding: 3vh;
-        flex: 1 1 auto;
-        text-align: center;
-    }
+    .downdiv{
+            padding-top: 1%;
+            flex: 1 1 auto;
+            position: relative;
+            margin: auto;
+            text-align: center;
+        }
 
+        .downmenu {
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            margin-top: 20px;
+            width: 100%;
+            /* overflow:scroll; */
+            background-color: #56F5CF;
+        }
+
+    
     input[type=button] {
-        background-color: #CFDFC2;
-        border-radius: 30%;
+        background-color: #F8B22C;
+        border-radius: 10%;
     }
-
+    
     
     .displayitem {
         width: 70%;
@@ -82,8 +103,7 @@
     }
     
     body {
-        background: rgb(234,253,255);
-        background: radial-gradient(circle, rgba(234,253,255,1) 50%, rgba(238,218,255,1) 73%, rgba(242,191,255,1) 100%);
+        background:#FFFFFF;
     }
 
     .contestbg{
@@ -98,7 +118,14 @@
         right: 20px;
         float:right;
     }
+    .nobp {
+        margin-bottom: 0;
+        font-weight: 400;
+    }
 
+    .title {
+        color:white;
+    }
 
     </style>
 
@@ -132,27 +159,56 @@
 
     <div class="outbox">
         <div style="position: fixed; left: 0; padding:1vw; margin: 1vw" >
-            <input type="image" class="smallimg" src="/static/images/left-arrow.png" id="back">
-            <p style="display: inline; font-size: 3vw">Back</p>
+<!--            <input type="image" class="smallimg" src="/static/images/left-arrow.png" id="back">
+-->            <p style="display: inline; font-size: 3vw; color:white;cursor:pointer;" id="back"> < Back</p>
         </div>
         
         <div class="top">
-            <h1> Weekly Contest </h1>
-            <p> Time:<span id="contestTimer"></span></p>
-            <p style="display: inline">Topic: Nut shells</p>
-            <input type="button" value="detail" style="display: inline" data-toggle="modal" id="detail" data-target="#exampleModalCenter">
+            <h1 class="title"><b> Weekly Contest </b></h1>
+            <p style = "color:white;"> Remaining Time: <span id="contestTimer"></span></p>
+            <p style="display: inline; color:white;">Topic: Nut shells</p>
+            <input type="button" value="Details" style="display: inline" data-toggle="modal" id="detail" data-target="#exampleModalCenter">
+            <div class="down">
+                <div class="downdiv">
+                    <input type="button" name="" id="participate" value="Participate">
+                </div>
+                <div class="downdiv">
+                    <input type="button" name="" id="result" value="See Current Ranking">
+                </div>
+            </div>
         </div>
         <!-- <br><br><br><br><br><br><br><br><br><br> -->
         <div class="display" id="display">
 
         </div>
 
-        <div class="down">
+        <br><br><br><br><br><br><br><br><br><br> 
+
+        <!-- <div class="down">
             <div class="downdiv">
                 <input type="button" name="" id="participate" value="Participate">
             </div>
             <div class="downdiv">
                 <input type="button" name="" id="result" value="See results">
+            </div>
+        </div> -->
+        <div class="downmenu">
+            <div class="downdiv">
+                <input type="image" name="" id="home" src="{% static 'images/logo.png' %}" class="smallimg">
+                <p class="nobp">Home</p>
+            </div>
+            <div class="downdiv">
+                <input type="image" name="" id="contest" src="{% static 'images/contest.png' %}" class="smallimg">
+                <p class="nobp">Contest</p>
+            </div>
+            
+            <div class="downdiv">
+                <input type="image" name="" id="post" src="{% static 'images/edit.png' %}" class="smallimg">
+                <p class="nobp">Post</p>
+            </div>
+            <div class="downdiv">
+                <img src="/static/images/user.png" class="smallimg" alt="">
+                <p class="nobp">Me</p>
             </div>
         </div>
 
@@ -161,12 +217,13 @@
 </body>
 <script>
     var arr = ["/static/images/images/nuts shell 06.png", "/static/images/images/nuts shell 02.png", "/static/images/images/nuts shell 03.png", "/static/images/images/nuts shell 04.png", "/static/images/images/nuts shell 07.png"];
-    var description = ["Nacklace", "Drawing", "Lotus", "Plum Blossom", "Earrings"];
-    var zans = ["999", "777", "123", "21", "10"];
+    var description = ["Blue and Gold Nacklace", "Artwork Made From Pistachio", "Pieced Together Lotus Flowers", "Plum Blossom", "Avacado Earrings"];
+    var zans = ["120", "230", "56", "21", "10"];
     for (var i = 0; i < arr.length; i++) {
         var newdiv = $("<div>").addClass("displayitem");
         var leftdiv = $("<div>").addClass("leftdivitem");
-        var img = $("<img src=" + "\"" + arr[i] + "\">").addClass("displayimage");
+        // var img = $("<img src=" + "\"" + arr[i] + "\">").addClass("displayimage");
+        var img = $("<input type=\"image\" src=\"" + arr[i] + "\">").addClass("displayimage");
         leftdiv.append(img)
         var rightdiv = $("<div id=" + "\"" + i + "\"" + ">").addClass("rightdivitem");
         var newp = $("<p style=\"font-size: 4vh\">" + description[i] + "</p>");
@@ -246,6 +303,18 @@
 
     $("#participate").click(function(){
         window.location.href = "./post";
+    })
+
+    $("#home").click(function() {
+        window.location.href = "./";
+    })
+
+    $("#post").click(function(){
+        window.location.href = "./post";
+    })
+
+    $(".displayimage").click(function() {
+        window.location.href = "./postprofile";
     })
 
     
